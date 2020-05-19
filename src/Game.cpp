@@ -1,6 +1,10 @@
 #include <iostream>
 #include "./Constants.h"
 #include "./Game.h"
+#include "../lib/glm/glm.hpp"
+
+EntityManager manager;
+SDL_Renderer* Game::renderer;
 
 Game::Game() {
     this->isRunning = false;
@@ -11,11 +15,6 @@ Game::~Game() {}
 bool Game::IsRunning() const {
     return this->isRunning;
 }
-
-float projectilePosX = 0.0f;
-float projectilePosY = 0.0f;
-float projectileVelocityX = 20.0f;
-float projectileVelocityY = 30.0f;
 
 void Game::Initialize(int width, int height) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -62,7 +61,6 @@ void Game::ProcessInput() {
                     this->isRunning = false;
                     break;
                 }
-        
 
         default:
             break;
@@ -70,8 +68,11 @@ void Game::ProcessInput() {
 }
 
 void Game::Update() {
-    // Wait until our target frame rate (16.6ms or so..) elapsed since the last frame
-    while (!SDL_TICKS_PASSED(SDL_GetTicks(), ticksLastFrame + FRAME_TARGET_TIME));
+    int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - ticksLastFrame);
+
+    if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME) {
+        SDL_Delay(timeToWait);
+    }
 
     // Delta time is the difference in ticks from the last frame converted to seconds
     float deltaTime = (SDL_GetTicks() - ticksLastFrame) / 1000.0f;
@@ -83,24 +84,16 @@ void Game::Update() {
     // Sets the new ticks for the current frame to be used in the next pass
     ticksLastFrame = SDL_GetTicks();
 
-    projectilePosX += projectileVelocityX * deltaTime;
-    projectilePosY += projectileVelocityY * deltaTime;
+    // TODO:
+    // Here we call manager.update to update all entities as  a function of deltaTime
 }
 
 void Game::Render() {
     SDL_SetRenderDrawColor(this->renderer, 21, 21, 21, 255);
     SDL_RenderClear(this->renderer);
 
-    SDL_Rect projectile {
-        (int) projectilePosX,
-        (int) projectilePosY,
-        10,
-        10
-    };
-
-    SDL_SetRenderDrawColor(this->renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(this->renderer, &projectile);
-
+    // TODO:
+    // Here we call the manager.render to render all our entities
     SDL_RenderPresent(this->renderer);
 }
 
