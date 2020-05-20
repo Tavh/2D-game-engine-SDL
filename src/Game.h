@@ -13,7 +13,7 @@ private:
     SDL_Window *window;
     int ticksLastFrame;
 public:
-    static SDL_Renderer *renderer;
+    static SDL_Renderer* renderer;
 
     Game();
     ~Game();
