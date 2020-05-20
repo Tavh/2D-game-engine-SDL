@@ -4,7 +4,6 @@
 #include "../lib/glm/glm.hpp"
 #include "./components/TransformComponent.h"
 #include "./components/SpriteComponent.h"
-#include "./AssetManager.h"
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);

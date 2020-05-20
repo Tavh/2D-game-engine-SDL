@@ -39,6 +39,11 @@ public:
     T* GetComponent() {
         return static_cast<T*>(componentTypeMap[&typeid(T)]);
     }
-};
 
+    template <typename T>
+    bool HasComponent() {
+        T* component = this->GetComponent<T>();
+        return component != nullptr;
+    }
+};
 #endif

@@ -16,8 +16,8 @@ public:
     bool HasNoEntities() const;
     Entity& AddEntity(std::string entityName);
     std::vector<Entity*> GetEntities() const;
-    unsigned int GetEntityCount();
-    void ListAllEntities();
+    unsigned int GetEntityCount() const;
+    void ListAllEntities() const;
 };
 
 #endif

@@ -32,12 +32,12 @@ std::vector<Entity*> EntityManager::GetEntities() const {
     return this->entities;
 }
 
-unsigned int EntityManager::GetEntityCount() {
+unsigned int EntityManager::GetEntityCount() const {
     return this->entities.size();
 }
 
-void EntityManager::ListAllEntities() {
-    int entityIndex = 0;
+void EntityManager::ListAllEntities() const {
+    unsigned int entityIndex = 0;
     for (auto& entity : this->entities) {
         std::cout << "Entity" << "[" << entityIndex << "]" << "name: " << entity->name 
         << "\ncomponents:" << std::endl;
