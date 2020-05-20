@@ -1,9 +1,10 @@
 #ifndef TRANSFORMCOMPONENT_H
 #define TRANSFORMCOMPONENT_H
 
+#include <SDL2/SDL.h>
+#include <bits/stdc++.h>
 #include "../EntityManager.h"
 #include "../../lib/glm/glm.hpp"
-#include <SDL2/SDL.h>
 #include "../Game.h"
 
 class TransformComponent : public Component{
@@ -27,8 +28,19 @@ public:
     }
 
     void Update(float deltaTime) override {
-        position.x += velocity.x * deltaTime;
-        position.y += velocity.y * deltaTime;
+        int velocityX = velocity.x * deltaTime;
+        int velocityY = velocity.y * deltaTime;
+
+        position.x += velocityX;
+        position.y += velocityY;
+
+        // position.x = clamp(position.x + velocityX, -10, WINDOW_WIDTH);
+        // position.y = clamp(position.y + velocityY, -10, WINDOW_HEIGHT);
+    }
+
+    double clamp(double d, double min, double max) {
+        const double t = d < min ? min : d;
+        return t > max ? max : t;
     }
 
     void Render() override {}
