@@ -2,10 +2,10 @@
 #define ENTITY_H
 #include <vector>
 #include <string>
-#include "./EntityManager.h"
-#include "./Component.h"
 #include <iostream>
 #include <map>
+#include "./EntityManager.h"
+#include "./Component.h"
 
 class EntityManager;
 class Component;
@@ -30,9 +30,14 @@ public:
 	    T* newComponent(new T(std::forward<TArgs>(args)...));
 	    newComponent->owner = this;
 	    this->components.emplace_back(newComponent);
-        componentTypeMap[&typeid(*newComponent)] = newComponent;
+        this->componentTypeMap[&typeid(*newComponent)] = newComponent;
 	    newComponent->Initialize();
 	    return *newComponent;
+    }
+
+    template <typename T>
+    T* GetComponent() {
+        return static_cast<T*>(componentTypeMap[&typeid(T)]);
     }
 };
 

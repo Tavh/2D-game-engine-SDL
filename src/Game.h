@@ -5,7 +5,9 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "./Component.h"
-#include "EntityManager.h"
+#include "./EntityManager.h"
+
+class AssetManager;
 
 class Game {
 private:
@@ -14,6 +16,7 @@ private:
     int ticksLastFrame;
 public:
     static SDL_Renderer* renderer;
+    static AssetManager* assetManager;
 
     Game();
     ~Game();
