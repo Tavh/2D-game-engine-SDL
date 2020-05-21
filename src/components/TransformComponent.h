@@ -28,14 +28,8 @@ public:
     }
 
     void Update(float deltaTime) override {
-        int velocityX = velocity.x * deltaTime;
-        int velocityY = velocity.y * deltaTime;
-
-        position.x += velocityX;
-        position.y += velocityY;
-
-        // position.x = clamp(position.x + velocityX, -10, WINDOW_WIDTH);
-        // position.y = clamp(position.y + velocityY, -10, WINDOW_HEIGHT);
+        position.x = clamp((position.x + (velocity.x * deltaTime)), 0, WINDOW_WIDTH - width);
+        position.y = clamp((position.y + (velocity.y * deltaTime)), 0, WINDOW_HEIGHT - height);
     }
 
     double clamp(double d, double min, double max) {
