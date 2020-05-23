@@ -40,7 +40,8 @@ public:
     }
 
     void Update(float deltaTime) override {
-        // TODO: This is where we'll take care of the tile positions based on the camera control that will keep moving around
+        destRect.x = position.x - Game::camera.x;
+        destRect.y = position.y - Game::camera.y;
     }
 
     void Render() override {

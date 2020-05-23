@@ -28,14 +28,14 @@ public:
     }
 
     void Update(float deltaTime) override {
-        position.x = clamp((position.x + (velocity.x * deltaTime)), 0, WINDOW_WIDTH - width);
-        position.y = clamp((position.y + (velocity.y * deltaTime)), 0, WINDOW_HEIGHT - height);
+        position.x += velocity.x * deltaTime; // clamp((position.x + (velocity.x * deltaTime)), 0, Game::camera.x - width);
+        position.y += velocity.y * deltaTime; // clamp((position.y + (velocity.y * deltaTime)), 0, Game::camera.y - height);
     }
 
-    double clamp(double d, double min, double max) {
-        const double t = d < min ? min : d;
-        return t > max ? max : t;
-    }
+    // double clamp(double d, double min, double max) {
+    //     const double t = d < min ? min : d;
+    //     return t > max ? max : t;
+    // }
 
     void Render() override {}
 };
