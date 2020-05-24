@@ -1,4 +1,6 @@
-#include "EntityManager.h"
+#include "./EntityManager.h"
+#include "./Collision.h"
+#include "./components/ColliderComponent.h"
 
 void EntityManager::ClearData() {
     for (auto& entity : this->entities) {
@@ -28,6 +30,21 @@ Entity& EntityManager::AddEntity(std::string entityName, LayerType layer) {
     Entity* entity = new Entity(*this, entityName, layer);
     entities.emplace_back(entity);
     return *entity;
+}
+
+std::string EntityManager::CheckEntityCollisions(Entity& myEntity) const {
+    ColliderComponent* myCollider = myEntity.GetComponent<ColliderComponent>();
+    for (auto& entity : entities) {
+        if (entity->name.compare(myEntity.name) != 0 && entity->name.compare("Tile") != 0) {
+            if (entity->HasComponent<ColliderComponent>()) {
+                ColliderComponent* otherCollider = entity->GetComponent<ColliderComponent>();
+                if (Collision::CheckRectCollision(myCollider->collider, otherCollider->collider)) {
+                    return otherCollider->colliderTag;
+                }
+            }
+        }
+    }
+    return std::string();
 }
 
 std::vector<Entity*> EntityManager::GetEntities() const {
@@ -60,3 +77,4 @@ void EntityManager::ListAllEntities() const {
         entityIndex++;
     }
 }
+

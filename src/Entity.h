@@ -44,8 +44,7 @@ public:
 
     template <typename T>
     bool HasComponent() {
-        T* component = this->GetComponent<T>();
-        return component != nullptr;
+        return componentTypeMap.count(&typeid(T));
     }
 };
 #endif

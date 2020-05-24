@@ -69,7 +69,6 @@ public:
         texture = Game::assetManager->GetTexture(assetTextureId);
     }
 
-
     void Initialize() override {
         this->transform = owner->GetComponent<TransformComponent>();
         srcRect.x = 0;

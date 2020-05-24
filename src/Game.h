@@ -29,5 +29,6 @@ public:
     void Destroy();
     void LoadLevel(int levelNumber);
     void HandleCameraMovement();
+    void CheckCollisions();
 };
 #endif
