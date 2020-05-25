@@ -6,6 +6,7 @@
 #include "./components/SpriteComponent.h"
 #include "./components/KeyboardControlComponent.h"
 #include "./components/ColliderComponent.h"
+#include "./components/TextLabelComponent.h"
 #include "./Map.h"
 
 EntityManager manager;
@@ -31,6 +32,10 @@ bool Game::IsRunning() const {
 void Game::Initialize(int width, int height) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::cerr << "Error initializing SDL." << std::endl;
+        return;
+    }
+    if (TTF_Init() != 0) {
+        std::cerr << "Error initializing SDL TTF" << std::endl;
         return;
     }
     this->window = SDL_CreateWindow(
@@ -69,6 +74,7 @@ void Game::LoadLevel(int levelNumber) {
     assetManager->AddTexture("jungle-tile-texture", std::string("./assets/tilemaps/jungle.png").c_str());
     assetManager->AddTexture("collision-box", std::string("./assets/images/collision-texture.png").c_str());
     assetManager->AddTexture("heliport-image", std::string("./assets/images/heliport.png").c_str());
+    assetManager->AddFont("charriot-font", std::string("./assets/fonts/charriot.ttf").c_str(), 14);
 
     map = new Map("jungle-tile-texture", 2, 32);
     map->LoadMap("./assets/tilemaps/jungle.map", 25, 20);
@@ -92,6 +98,9 @@ void Game::LoadLevel(int levelNumber) {
     radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64 ,1);
     radarEntity.AddComponent<SpriteComponent>("radar-image", 8, 150, false, true);
     manager.ListAllEntities();
+
+    Entity& labelLevelName(manager.AddEntity("LabelLevelName", UI_LAYER));
+    labelLevelName.AddComponent<TextLabelComponent>(10, 10, "First level...", "charriot-font", WHITE_COLOR);
 }
 
 void Game::ProcessInput() {
